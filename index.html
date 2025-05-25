@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Complaint System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <form id="complaintForm">
+  <input type="text" id="title" required placeholder="Title" />
+  <textarea id="description" required placeholder="Description"></textarea>
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const form = document.getElementById('complaintForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('title').value.trim();
+    const description = document.getElementById('description').value.trim();
+    
+    if (title && description) {
+      await submitComplaint(title, description);
+      form.reset();
+    } else {
+      alert('Please fill out both fields.');
+    }
+  });
+</script>
+
+
+  <script src="db.js"></script>
+  <script src="sync.js"></script>
+  <script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker registered'))
+      .catch((err) => console.error('Service Worker registration failed:', err));
+  }
+</script>
+
+</body>
+</html>
